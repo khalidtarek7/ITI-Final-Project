@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('CI') {
             steps {
-                git 'https://github.com/mahmoud254/jenkins_nodejs_example'
+                git 'https://github.com/khalidtarek7/Nodejs-App'
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh """
                 docker login -u ${USERNAME} -p ${PASSWORD}
@@ -16,9 +16,11 @@ pipeline {
         }
          stage('CD') {
             steps {
+                git 'https://github.com/khalidtarek7/Nodejs-App'
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh """
-                kubectl run backendapp --image=khalidtarek7/nagato -n backend-ns
+                kubectl apply -f /var/jenkins_home/workspace/khalid/app.yaml
+                kubectl apply -f /var/jenkins_home/workspace/khalid/app-loadbalancer.yaml
                 """
                 }
             }
