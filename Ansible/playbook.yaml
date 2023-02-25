@@ -1,0 +1,10 @@
+
+# Ansible playbook AWS - install docker
+---
+- name: "AWS - Install docker & jenkins"
+  hosts: workernode
+  become: yes
+  roles:
+    - roles/docker
+    - roles/jenkins
+
